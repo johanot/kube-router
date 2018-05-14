@@ -708,6 +708,8 @@ func (nsc *NetworkServicesController) syncIpvsServices(serviceInfoMap serviceInf
 		if len(endpoints) > 0 && strings.Contains(k, "-") {
 			parts := strings.SplitN(k, "-", 3)
 			addrActive[parts[0]] = true
+			glog.Errorf("Active addr: %s", parts[0])
+
 		}
 	}
 
@@ -718,8 +720,10 @@ func (nsc *NetworkServicesController) syncIpvsServices(serviceInfoMap serviceInf
 	}
 	for _, addr := range addrs {
 		isActive := addrActive[addr.IP.String()]
+
+		glog.Errorf("Search addr: %s", addr)
 		if !isActive {
-			glog.Errorf("Found an IP %s which is no longer needed so cleaning up", addr.IP.String())
+			//glog.Errorf("Found an IP %s which is no longer needed so cleaning up", addr.IP.String())
 			err := nsc.ln.ipAddrDel(dummyVipInterface, addr.IP.String())
 			if err != nil {
 				glog.Errorf("Failed to delete stale IP %s due to: %s",
