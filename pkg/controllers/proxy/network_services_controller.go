@@ -583,6 +583,7 @@ func (nsc *NetworkServicesController) syncIpvsServices(serviceInfoMap serviceInf
 				}
 
 				// ensure VIP less director. we dont assign VIP to any interface
+				glog.Errorf("Want to remove from external IP: %s", externalIP)
 				err = nsc.ln.ipAddrDel(dummyVipInterface, externalIP)
 
 				// do policy routing to deliver the packet locally so that IPVS can pick the packet
