@@ -719,7 +719,7 @@ func (nsc *NetworkServicesController) syncIpvsServices(serviceInfoMap serviceInf
 	for _, addr := range addrs {
 		isActive := addrActive[addr.IP.String()]
 		if !isActive {
-			glog.V(1).Infof("Found an IP %s which is no longer needed so cleaning up", addr.IP.String())
+			glog.Errorf("Found an IP %s which is no longer needed so cleaning up", addr.IP.String())
 			err := nsc.ln.ipAddrDel(dummyVipInterface, addr.IP.String())
 			if err != nil {
 				glog.Errorf("Failed to delete stale IP %s due to: %s",
