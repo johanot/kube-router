@@ -96,6 +96,7 @@ type linuxNetworking struct {
 
 func (ln *linuxNetworking) ipAddrDel(iface netlink.Link, ip string) error {
 	naddr := &netlink.Addr{IPNet: &net.IPNet{IP: net.ParseIP(ip), Mask: net.IPv4Mask(255, 255, 255, 255)}, Scope: syscall.RT_SCOPE_LINK}
+	glog.Errorf("Want to delete addr: %s", naddr.IPNet.IP.String())
 	err := netlink.AddrDel(iface, naddr)
 	if err != nil && err.Error() != IFACE_HAS_NO_ADDR {
 		glog.Errorf("Failed to verify is external ip %s is assocated with dummy interface %s due to %s",
