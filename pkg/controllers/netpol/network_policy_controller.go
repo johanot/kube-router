@@ -305,7 +305,7 @@ func (npc *NetworkPolicyController) syncNetworkPolicyChains() (map[string]bool, 
 		}
 
 		// TODO use iptables-restore to better implement the logic, than flush and add rules
-		err = iptablesCmdHandler.ClearChain("filter", policyChainName)
+		/*err = iptablesCmdHandler.ClearChain("filter", policyChainName)
 		if err != nil && err.(*iptables.Error).ExitStatus() != 1 {
 			return nil, nil, fmt.Errorf("Failed to run iptables command: %s", err.Error())
 		}
@@ -318,7 +318,7 @@ func (npc *NetworkPolicyController) syncNetworkPolicyChains() (map[string]bool, 
 		err = npc.processEgressRules(policy, targetSourcePodIpSetName, activePolicyIpSets)
 		if err != nil {
 			return nil, nil, err
-		}
+		}*/
 	}
 
 	glog.V(2).Infof("Iptables chains in the filter table are synchronized with the network policies.")
