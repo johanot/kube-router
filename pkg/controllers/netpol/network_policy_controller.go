@@ -32,6 +32,8 @@ const (
 	networkPolicyAnnotation = "net.beta.kubernetes.io/network-policy"
 )
 
+var once = false;
+
 // Network policy controller provides both ingress and egress filtering for the pods as per the defined network
 // policies. Two different types of iptables chains are used. Each pod running on the node which either
 // requires ingress or egress filtering gets a pod specific chains. Each network policy has a iptable chain, which
@@ -308,17 +310,20 @@ func (npc *NetworkPolicyController) syncNetworkPolicyChains() (map[string]bool, 
 		/*err = iptablesCmdHandler.ClearChain("filter", policyChainName)
 		if err != nil && err.(*iptables.Error).ExitStatus() != 1 {
 			return nil, nil, fmt.Errorf("Failed to run iptables command: %s", err.Error())
-		}
-
-		err = npc.processIngressRules(policy, targetDestPodIpSetName, activePolicyIpSets)
-		if err != nil {
-			return nil, nil, err
-		}
-
-		err = npc.processEgressRules(policy, targetSourcePodIpSetName, activePolicyIpSets)
-		if err != nil {
-			return nil, nil, err
 		}*/
+
+		if !once {
+			err = npc.processIngressRules(policy, targetDestPodIpSetName, activePolicyIpSets)
+			if err != nil {
+				return nil, nil, err
+			}
+
+			err = npc.processEgressRules(policy, targetSourcePodIpSetName, activePolicyIpSets)
+			if err != nil {
+				return nil, nil, err
+			}
+			once = true;
+		}
 	}
 
 	glog.V(2).Infof("Iptables chains in the filter table are synchronized with the network policies.")
