@@ -322,9 +322,9 @@ func (npc *NetworkPolicyController) syncNetworkPolicyChains() (map[string]bool, 
 			if err != nil {
 				return nil, nil, err
 			}
-			once = true;
 		}
 	}
+	once = true;
 
 	glog.V(2).Infof("Iptables chains in the filter table are synchronized with the network policies.")
 
