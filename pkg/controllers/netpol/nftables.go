@@ -118,6 +118,7 @@ const (
 	{{define "port"}}{{$proto := toLower .Protocol}}{{if .Port}}{{ $proto }} dport {{.Port}}{{else}}ip protocol {{ $proto }}{{end}}{{end}}
 	{{define "accept"}}
 		ip protocol icmp accept
+		ip daddr { {{serviceCIDR}} } accept
 		{{if .LocalIp4}}ip saddr { {{range .LocalIp4}}{{.}},{{end}} } accept{{end}}
 	{{end}}
 	{{define "markforreject"}}nftrace set 1 mark set 32760{{end}}
@@ -151,6 +152,9 @@ func NewNFTablesHandler(podCIDR string, defaultDeny bool) (*NFTables, error) {
 		},
 		"podCIDR": func() string {
 			return podCIDR
+		},
+		"serviceCIDR": func() string {
+			return "10.234.0.0/16"
 		},
 	}).Parse(NFTABLES_TEMPLATE)
 	if err != nil {
