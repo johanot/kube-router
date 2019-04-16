@@ -36,49 +36,50 @@ Also you can choose to run kube-router as agent running on each cluster node. Al
 
 ```
 Usage of kube-router:
-      --advertise-cluster-ip             Add Cluster IP of the service to the RIB so that it gets advertises to the BGP peers.
-      --advertise-external-ip            Add External IP of service to the RIB so that it gets advertised to the BGP peers.
-      --advertise-loadbalancer-ip        Add LoadbBalancer IP of service status as set by the LB provider to the RIB so that it gets advertised to the BGP peers.
-      --advertise-pod-cidr               Add Node's POD cidr to the RIB so that it gets advertised to the BGP peers. (default true)
-      --bgp-graceful-restart             Enables the BGP Graceful Restart capability so that routes are preserved on unexpected restarts
-      --bgp-port uint16                  The port open for incoming BGP connections and to use for connecting with other BGP peers. (default 179)
-      --cache-sync-timeout duration      The timeout for cache synchronization (e.g. '5s', '1m'). Must be greater than 0. (default 1m0s)
-      --cleanup-config                   Cleanup iptables rules, ipvs, ipset configuration and exit.
-      --cluster-asn uint                 ASN number under which cluster nodes will run iBGP.
-      --cluster-cidr string              CIDR range of pods in the cluster. It is used to identify traffic originating from and destinated to pods.
-      --disable-source-dest-check        Disable the source-dest-check attribute for AWS EC2 instances. When this option is false, it must be set some other way. (default true)
-      --enable-cni                       Enable CNI plugin. Disable if you want to use kube-router features alongside another CNI plugin. (default true)
-      --enable-ibgp                      Enables peering with nodes with the same ASN, if disabled will only peer with external BGP peers (default true)
-      --enable-overlay                   When enable-overlay set to true, IP-in-IP tunneling is used for pod-to-pod networking across nodes in different subnets. When set to false no tunneling is used and routing infrastrcture is expected to route traffic for pod-to-pod networking across nodes in different subnets (default true)
-      --enable-pod-egress                SNAT traffic from Pods to destinations outside the cluster. (default true)
-      --enable-pprof                     Enables pprof for debugging performance and memory leak issues.
-      --hairpin-mode                     Add iptables rules for every Service Endpoint to support hairpin traffic.
-      --health-port uint16               Health check port, 0 = Disabled (default 20244)
-  -h, --help                             Print usage information.
-      --hostname-override string         Overrides the NodeName of the node. Set this if kube-router is unable to determine your NodeName automatically.
-      --network-policy-handler string    Determines which implementation should be used as network policy handler, either of: "iptables", "nftables". (default "iptables")
-      --iptables-sync-period duration    The delay between iptables rule synchronizations (e.g. '5s', '1m'). Must be greater than 0. (default 5m0s)
-      --ipvs-sync-period duration        The delay between ipvs config synchronizations (e.g. '5s', '1m', '2h22m'). Must be greater than 0. (default 5m0s)
-      --kubeconfig string                Path to kubeconfig file with authorization information (the master location is set by the master flag).
-      --masquerade-all                   SNAT all traffic to cluster IP/node port.
-      --master string                    The address of the Kubernetes API server (overrides any value in kubeconfig).
-      --metrics-path string              Prometheus metrics path (default "/metrics")
-      --metrics-port uint16              Prometheus metrics port, (Default 0, Disabled)
-      --nodeport-bindon-all-ip           For service of NodePort type create IPVS service that listens on all IP's of the node.
-      --nodes-full-mesh                  Each node in the cluster will setup BGP peering with rest of the nodes. (default true)
-      --override-nexthop                 Override the next-hop in bgp routes sent to peers with the local ip.
-      --peer-router-asns uints           ASN numbers of the BGP peer to which cluster nodes will advertise cluster ip and node's pod cidr. (default [])
-      --peer-router-ips ipSlice          The ip address of the external router to which all nodes will peer and advertise the cluster ip and pod cidr's. (default [])
-      --peer-router-multihop-ttl uint8   Enable eBGP multihop supports -- sets multihop-ttl. (Relevant only if ttl >= 2)
-      --peer-router-passwords strings    Password for authenticating against the BGP peer defined with "--peer-router-ips".
-      --peer-router-ports uints          The remote port of the external BGP to which all nodes will peer. If not set, default BGP port (179) will be used. (default [])
-      --router-id string                 BGP router-id. Must be specified in a ipv6 only cluster.
-      --routes-sync-period duration      The delay between route updates and advertisements (e.g. '5s', '1m', '2h22m'). Must be greater than 0. (default 5m0s)
-      --run-firewall                     Enables Network Policy -- sets up iptables to provide ingress firewall for pods. (default true)
-      --run-router                       Enables Pod Networking -- Advertises and learns the routes to Pods via iBGP. (default true)
-      --run-service-proxy                Enables Service Proxy -- sets up IPVS for Kubernetes Services. (default true)
-  -v, --v string                         log level for V logs (default "0")
-  -V, --version                          Print version information.
+      --advertise-cluster-ip                   Add Cluster IP of the service to the RIB so that it gets advertises to the BGP peers.
+      --advertise-external-ip                  Add External IP of service to the RIB so that it gets advertised to the BGP peers.
+      --advertise-loadbalancer-ip              Add LoadbBalancer IP of service status as set by the LB provider to the RIB so that it gets advertised to the BGP peers.
+      --advertise-pod-cidr                     Add Node's POD cidr to the RIB so that it gets advertised to the BGP peers. (default true)
+      --bgp-graceful-restart                   Enables the BGP Graceful Restart capability so that routes are preserved on unexpected restarts
+      --bgp-port uint16                        The port open for incoming BGP connections and to use for connecting with other BGP peers. (default 179)
+      --cache-sync-timeout duration            The timeout for cache synchronization (e.g. '5s', '1m'). Must be greater than 0. (default 1m0s)
+      --cleanup-config                         Cleanup iptables rules, ipvs, ipset configuration and exit.
+      --cluster-asn uint                       ASN number under which cluster nodes will run iBGP.
+      --cluster-cidr string                    CIDR range of pods in the cluster. It is used to identify traffic originating from and destinated to pods.
+      --disable-source-dest-check              Disable the source-dest-check attribute for AWS EC2 instances. When this option is false, it must be set some other way. (default true)
+      --enable-cni                             Enable CNI plugin. Disable if you want to use kube-router features alongside another CNI plugin. (default true)
+      --enable-ibgp                            Enables peering with nodes with the same ASN, if disabled will only peer with external BGP peers (default true)
+      --enable-overlay                         When enable-overlay set to true, IP-in-IP tunneling is used for pod-to-pod networking across nodes in different subnets. When set to false no tunneling is used and routing infrastrcture is expected to route traffic for pod-to-pod networking across nodes in different subnets (default true)
+      --enable-pod-egress                      SNAT traffic from Pods to destinations outside the cluster. (default true)
+      --enable-pprof                           Enables pprof for debugging performance and memory leak issues.
+      --hairpin-mode                           Add iptables rules for every Service Endpoint to support hairpin traffic.
+      --health-port uint16                     Health check port, 0 = Disabled (default 20244)
+  -h, --help                                   Print usage information.
+      --hostname-override string               Overrides the NodeName of the node. Set this if kube-router is unable to determine your NodeName automatically.
+      --iptables-sync-period duration          The delay between iptables rule synchronizations (e.g. '5s', '1m'). Must be greater than 0. (default 5m0s)
+      --ipvs-sync-period duration              The delay between ipvs config synchronizations (e.g. '5s', '1m', '2h22m'). Must be greater than 0. (default 5m0s)
+      --kubeconfig string                      Path to kubeconfig file with authorization information (the master location is set by the master flag).
+      --masquerade-all                         SNAT all traffic to cluster IP/node port.
+      --master string                          The address of the Kubernetes API server (overrides any value in kubeconfig).
+      --metrics-path string                    Prometheus metrics path (default "/metrics")
+      --metrics-port uint16                    Prometheus metrics port, (Default 0, Disabled)
+      --network-policy-default-action string   Decides the default action to apply when no network policies apply to a pod, either of: either of: "allow", "deny". (default "allow")
+      --network-policy-handler string          Determines which implementation should be used as network policy handler, either of: "iptables", "nftables". (default "iptables")
+      --nodeport-bindon-all-ip                 For service of NodePort type create IPVS service that listens on all IP's of the node.
+      --nodes-full-mesh                        Each node in the cluster will setup BGP peering with rest of the nodes. (default true)
+      --override-nexthop                       Override the next-hop in bgp routes sent to peers with the local ip.
+      --peer-router-asns uints                 ASN numbers of the BGP peer to which cluster nodes will advertise cluster ip and node's pod cidr. (default [])
+      --peer-router-ips ipSlice                The ip address of the external router to which all nodes will peer and advertise the cluster ip and pod cidr's. (default [])
+      --peer-router-multihop-ttl uint8         Enable eBGP multihop supports -- sets multihop-ttl. (Relevant only if ttl >= 2)
+      --peer-router-passwords strings          Password for authenticating against the BGP peer defined with "--peer-router-ips".
+      --peer-router-ports uints                The remote port of the external BGP to which all nodes will peer. If not set, default BGP port (179) will be used. (default [])
+      --router-id string                       BGP router-id. Must be specified in a ipv6 only cluster.
+      --routes-sync-period duration            The delay between route updates and advertisements (e.g. '5s', '1m', '2h22m'). Must be greater than 0. (default 5m0s)
+      --run-firewall                           Enables Network Policy -- sets up iptables to provide ingress firewall for pods. (default true)
+      --run-router                             Enables Pod Networking -- Advertises and learns the routes to Pods via iBGP. (default true)
+      --run-service-proxy                      Enables Service Proxy -- sets up IPVS for Kubernetes Services. (default true)
+  -v, --v string                               log level for V logs (default "0")
+  -V, --version                                Print version information.
 ```
 
 ## requirements
