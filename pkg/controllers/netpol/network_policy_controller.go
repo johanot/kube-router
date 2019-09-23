@@ -241,6 +241,8 @@ func (npc *NetworkPolicyController) Sync() error {
 		return errors.New("Aborting sync. Failed to build egress pods: " + err.Error())
 	}
 
+	glog.V(1).Infof("nwplcy: fetching data from apiserver took %v", time.Since(start))
+
 	// delegate actual sync to the handler
 	return npc.handler.Sync(npc.networkPoliciesInfo, ingressPods, egressPods)
 }
